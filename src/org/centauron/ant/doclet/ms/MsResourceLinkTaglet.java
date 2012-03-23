@@ -10,8 +10,7 @@ public class MsResourceLinkTaglet implements Taglet {
     private static final String NAME = "@ms.resourcelink";
     private String ms_location;
     public MsResourceLinkTaglet() {
-    	//GET PATH TO MS
-    	
+    	//GET PATH TO MS    	
     	ms_location = System.getenv("MS");
     }
     public String getName() {
