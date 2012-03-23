@@ -24,6 +24,7 @@ public class MsResourceLinkTaglet implements Taglet {
 
     public boolean inConstructor() {
         return true;
+        
     }
 
     public boolean inMethod() {
