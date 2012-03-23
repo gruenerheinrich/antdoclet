@@ -1,0 +1,43 @@
+<project name="antdocletbuild" default="generate" basedir=".">
+    <target name="generate">
+        <path id="project.class.path">
+            <fileset dir="lib">
+                <include name="commons-lang-2.5.jar" />
+            </fileset>
+            <pathelement path="${java.class.path}" />
+        </path>    	
+    	<mkdir dir="out"/>
+    	  <delete includeemptydirs="true">
+    	    <fileset dir="out" includes="**/*"/>
+    	  </delete>    	
+        <javac srcdir="./src" destdir="out" source="1.5">
+        	<classpath refid="project.class.path" />
+        </javac>
+    	<!--copy ressources-->
+    	<copy todir="out/org/centauron/ant/doclet/resources">
+    	    <fileset dir="src/org/centauron/ant/doclet/resources"/>
+    	</copy>
+        <mkdir dir="jar"/>
+        <jar destfile="jar/antdoclet.jar">
+          <fileset dir="out"/>
+            <!--
+        	<restrict>
+             <name name="**/*.class"/>
+             <archives>
+               <zips>
+                <fileset dir="D:/java_libs/commons">
+                    <include name="commons-lang-2.5.jar" />
+                </fileset>
+               </zips>
+             </archives>
+            </restrict>
+            -->
+        	<zipgroupfileset dir="lib" includes="commons-lang-2.5.jar" />        	
+        </jar>
+    </target>
+	<target name="copyweb">
+		<scp port="22" todir="gruenerheinrich:mohnkuchen@web.sourceforge.net:/home/project-web/antdoclet/htdocs" trust="true">
+			<fileset dir="help"/>
+		</scp>
+	</target>
+</project>
