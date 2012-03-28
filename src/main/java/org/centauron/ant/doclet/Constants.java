@@ -7,7 +7,6 @@ import java.util.Date;
  *
  * Copyright: Copyright (c) 2002, Toni Thomsson, All rights reserved.
  * @author centauron
- * @version 0.5
  */
 public interface Constants
 {

@@ -1,12 +1,15 @@
 package org.centauron.ant.doclet;
 
-import java.io.OutputStream;
-import java.util.Vector;
-
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.ProgramElementDoc;
+import java.io.OutputStream;
+import java.util.Vector;
 
+/**
+ * 
+ * @author toben
+ */
 public class AntTaskDoc extends ResourceWriter  {
 	
 	private AntDoc m_parent;
