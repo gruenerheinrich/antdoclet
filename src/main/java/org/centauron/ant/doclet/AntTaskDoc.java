@@ -5,6 +5,7 @@ import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.ProgramElementDoc;
 import java.io.OutputStream;
 import java.util.Vector;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * 
@@ -145,7 +146,7 @@ public class AntTaskDoc extends ResourceWriter  {
 	}
 	private void writeSingleDetailedExample(String x1,String x2) throws Exception {
 		Object[] arguments = {
-	             Utility.escapeXMLString(x1),
+	             StringEscapeUtils.escapeXml(x1),
 	             x2
 		};
 		write(m_stream,"task-examples-detailedentry.template",arguments);		

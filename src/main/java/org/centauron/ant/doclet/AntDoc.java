@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.*;
 import org.apache.commons.lang.LocaleUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * Antdoc doclet
@@ -459,13 +460,13 @@ public class AntDoc {
 		if (t.name().equalsIgnoreCase(Constants.STANDARDTAG_CODE)) {
 
 			if (Utility.isMultiLine(t.text())) {
-				return "<pre style=\"background:#FFFFFF\">" + Utility.escapeXMLString(t.text()) + "</pre>";
+				return "<pre style=\"background:#FFFFFF\">" + StringEscapeUtils.escapeXml(t.text()) + "</pre>";
 			}
 
-			return "<code>" + Utility.escapeXMLString(t.text()) + "</code>";
+			return "<code>" + StringEscapeUtils.escapeXml(t.text()) + "</code>";
 		}
 		if (t.name().equalsIgnoreCase(Constants.STANDARDTAG_LITERAL)) {
-			return Utility.escapeXMLString(t.text());
+			return StringEscapeUtils.escapeXml(t.text());
 		}
 		if (t.name().equalsIgnoreCase(Constants.STANDARDTAG_LINK)) {
 			String dest = Utility.getStringPart(t.text(), 0);

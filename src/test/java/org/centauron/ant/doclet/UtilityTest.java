@@ -1,14 +1,15 @@
 package org.centauron.ant.doclet;
 
 import com.sun.javadoc.MethodDoc;
-import java.io.File;
 import org.junit.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  *
  * @author toben
  */
+
 public class UtilityTest {
 	
 	public UtilityTest() {
@@ -31,43 +32,13 @@ public class UtilityTest {
 	}
 
 	/**
-	 * Test of deleteAllFilesInDir method, of class Utility.
-	 */
-	@Test
-	public void testDeleteAllFilesInDir() {
-		System.out.println("deleteAllFilesInDir");
-		File dir = null;
-		Utility.deleteAllFilesInDir(dir);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
 	 * Test of isMultiLine method, of class Utility.
 	 */
 	@Test
 	public void testIsMultiLine() {
-		System.out.println("isMultiLine");
-		String s = "";
-		boolean expResult = false;
-		boolean result = Utility.isMultiLine(s);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of escapeXMLString method, of class Utility.
-	 */
-	@Test
-	public void testEscapeXMLString() {
-		System.out.println("escapeXMLString");
-		String xml = "";
-		String expResult = "";
-		String result = Utility.escapeXMLString(xml);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		assertTrue(Utility.isMultiLine("abc\ndef"));
+		assertTrue(Utility.isMultiLine("\nabcdef"));
+		assertFalse(Utility.isMultiLine("abcdef"));
 	}
 
 	/**
@@ -75,13 +46,10 @@ public class UtilityTest {
 	 */
 	@Test
 	public void testLowerFirstCharacter() {
-		System.out.println("lowerFirstCharacter");
-		String s = "";
-		String expResult = "";
-		String result = Utility.lowerFirstCharacter(s);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		assertEquals("abc", Utility.lowerFirstCharacter("Abc"));
+		assertEquals("aBC", Utility.lowerFirstCharacter("ABC"));
+		assertEquals("", Utility.lowerFirstCharacter(""));
+		assertNull(Utility.lowerFirstCharacter(null));
 	}
 
 	/**
@@ -89,14 +57,10 @@ public class UtilityTest {
 	 */
 	@Test
 	public void testGetStringPart() {
-		System.out.println("getStringPart");
-		String s = "";
-		int idx = 0;
-		String expResult = "";
-		String result = Utility.getStringPart(s, idx);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		assertEquals("bc", Utility.getStringPart("ab bc fg", 1));
+		assertEquals("ab", Utility.getStringPart("ab bc fg", 0));
+		assertEquals(null, Utility.getStringPart("ab bc fg", 20));
+		assertEquals("ab", Utility.getStringPart("ab bc fg", -20));
 	}
 
 	/**
@@ -104,14 +68,20 @@ public class UtilityTest {
 	 */
 	@Test
 	public void testConcatArray() {
-		System.out.println("concatArray");
-		MethodDoc[] m = null;
-		MethodDoc[] m2 = null;
-		MethodDoc[] expResult = null;
-		MethodDoc[] result = Utility.concatArray(m, m2);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		MethodDoc[] m = new MethodDoc[10];
+		for (int i=9;i>=0;i--) {
+			m[i]=mock(MethodDoc.class);
+			when(m[i].name()).thenReturn("name" + i);
+		}
+		
+		MethodDoc[] m2 = new MethodDoc[10];
+		for (int i=0;i<10;i++) {
+			m2[i]=mock(MethodDoc.class);
+			when(m2[i].name()).thenReturn("name" + i);
+		}
+		MethodDoc[] concatArray = Utility.concatArray(m, m2);
+		
+		assertEquals(20, concatArray.length);
 	}
 
 	/**
@@ -120,11 +90,15 @@ public class UtilityTest {
 	@Test
 	public void testSortArray() {
 		System.out.println("sortArray");
-		MethodDoc[] m = null;
-		MethodDoc[] expResult = null;
+		MethodDoc[] m = new MethodDoc[10];
+		for (int i=9;i>=0;i--) {
+			m[i]=mock(MethodDoc.class);
+			when(m[i].name()).thenReturn("name" + i);
+		}
+		
 		MethodDoc[] result = Utility.sortArray(m);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		assertEquals(m.length, result.length);
+		assertEquals("name0",m[0].name());
+		assertEquals("name9",m[m.length-1].name());
 	}
 }

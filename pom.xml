@@ -33,6 +33,12 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.5</version>
 		</dependency>
+	 <dependency>
+	  <groupId>org.mockito</groupId>
+	  <artifactId>mockito-core</artifactId>
+	  <version>1.9.0</version>
+	  <scope>test</scope>
+	 </dependency>
 	</dependencies>
 	<description>This doclet generates a javadoc documentation out of your ANT - Task Sourcefiles. 
 		The aim is to make it look like the normal ANT-Task documentation. 
