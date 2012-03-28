@@ -34,4 +34,19 @@
 			<version>2.5</version>
 		</dependency>
 	</dependencies>
+ <description>This doclet generates a javadoc documentation out of your ANT - Task Sourcefiles. 
+The aim is to make it look like the normal ANT-Task documentation. </description>
+ <build>
+  <plugins>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>2.3.2</version>
+    <configuration>
+     <source>1.6</source>
+     <target>1.6</target>
+    </configuration>
+   </plugin>
+  </plugins>
+ </build>
 </project>
