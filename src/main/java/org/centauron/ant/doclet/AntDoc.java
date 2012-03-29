@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -17,6 +19,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  */
 public class AntDoc {
 
+	private static final Logger logger = Logger.getLogger(AntDoc.class.getName());
 	private RootDoc m_Root = null;
 	private String m_Output = ".";
 	private String m_Overview = null;
@@ -611,8 +614,12 @@ public class AntDoc {
 			return true;
 		}
 		for (int i = 0; i < m_baseclassNames.length; i++) {
-			if (d.subclassOf(m_Root.classNamed(m_baseclassNames[i]))) {
-				return true;
+			if (m_Root.classNamed(m_baseclassNames[i]) != null) {
+				if (d.subclassOf(m_Root.classNamed(m_baseclassNames[i]))) {
+					return true;
+				}
+			} else {
+				logger.log(Level.WARNING, "{0} not found in classpath", m_baseclassNames[i]);
 			}
 		}
 		return false;

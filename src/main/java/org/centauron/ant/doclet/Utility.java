@@ -12,25 +12,29 @@ public class Utility {
 	public final static Logger logger = Logger.getLogger(Utility.class.getName());
 
 	/**
-	 * Removes all files in a directory. 
-	 * @param dir 
+	 * Removes all files in a directory.
+	 *
+	 * @param dir
 	 */
 	public static void deleteAllFilesInDir(File dir) {
-		File[] files = dir.listFiles();
-		for (File file : files) {
-			if (file.isDirectory()) {
-				Utility.deleteAllFilesInDir(file);
-			}
-			if (!file.delete()) {
-				logger.log(Level.WARNING, "Failed to delete {0}", file);
+		if (dir.exists()) {
+			File[] files = dir.listFiles();
+			for (File file : files) {
+				if (file.isDirectory()) {
+					Utility.deleteAllFilesInDir(file);
+				}
+				if (!file.delete()) {
+					logger.log(Level.WARNING, "Failed to delete {0}", file);
+				}
 			}
 		}
 	}
 
 	/**
-	 * Tests whether its a multiline string or not. 
+	 * Tests whether its a multiline string or not.
+	 *
 	 * @param s
-	 * @return 
+	 * @return
 	 */
 	public static boolean isMultiLine(String s) {
 		return s.indexOf("\n") != -1;
@@ -38,8 +42,9 @@ public class Utility {
 
 	/**
 	 * Lowers the first character of the string.
+	 *
 	 * @param s
-	 * @return 
+	 * @return
 	 */
 	public static String lowerFirstCharacter(String s) {
 		if (s == null) {
@@ -52,11 +57,12 @@ public class Utility {
 	}
 
 	/**
-	 * Delivers the nth part of a string. The index is 0 based. Indexes lower than
-	 * 0 returning the index 0.
+	 * Delivers the nth part of a string. The index is 0 based. Indexes lower
+	 * than 0 returning the index 0.
+	 *
 	 * @param s
 	 * @param idx
-	 * @return 
+	 * @return
 	 */
 	public static String getStringPart(String s, int idx) {
 		StringTokenizer tok = new StringTokenizer(s, " ");
@@ -69,21 +75,25 @@ public class Utility {
 		return tok.nextToken();
 	}
 
+	/**
+	 * Concatenate two arrays of MethodDoc arrays.
+	 *
+	 * @param m
+	 * @param m2
+	 * @return
+	 */
 	public static MethodDoc[] concatArray(MethodDoc[] m, MethodDoc[] m2) {
 		MethodDoc a[] = new MethodDoc[m.length + m2.length];
-		for (int i = 0; i < m.length; i++) {
-			a[i] = m[i];
-		}
-		for (int i = 0; i < m2.length; i++) {
-			a[i + m.length] = m2[i];
-		}
+		System.arraycopy(m, 0, a, 0, m.length);
+		System.arraycopy(m2, 0, a, m.length, m2.length);
 		return a;
 	}
 
 	/**
-	 * Sort an array of MethodDoc s.
+	 * Sort an array of MethodDoc s regarding the name attribute.
+	 *
 	 * @param m
-	 * @return 
+	 * @return
 	 */
 	public static MethodDoc[] sortArray(MethodDoc[] m) {
 		Arrays.sort(m, new Comparator<MethodDoc>() {
@@ -92,7 +102,7 @@ public class Utility {
 			public int compare(MethodDoc o1, MethodDoc o2) {
 				return o1.name().compareTo(o2.name());
 			}
-		} );
+		});
 		return m;
 	}
 }

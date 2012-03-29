@@ -40,6 +40,12 @@
 			<version>1.9.0</version>
 			<scope>test</scope>
 		</dependency>
+	 <dependency>
+	  <groupId>org.apache.ant</groupId>
+	  <artifactId>ant</artifactId>
+	  <version>1.8.3</version>
+	  <scope>test</scope>
+	 </dependency>
 	</dependencies>
 	<description>This doclet generates a javadoc documentation out of your ANT - Task Sourcefiles. 
 		The aim is to make it look like the normal ANT-Task documentation. 

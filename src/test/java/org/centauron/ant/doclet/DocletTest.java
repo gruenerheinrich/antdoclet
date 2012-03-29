@@ -1,9 +1,6 @@
 package org.centauron.ant.doclet;
 
-import com.sun.javadoc.DocErrorReporter;
-import com.sun.javadoc.RootDoc;
 import org.junit.*;
-import static org.junit.Assert.*;
 
 /**
  *
