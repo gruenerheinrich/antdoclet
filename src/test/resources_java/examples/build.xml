@@ -1,0 +1,27 @@
+<project name="Example Antdoclet" default="javadoc" basedir=".">
+    
+    <target name="javadoc">
+        <javadoc sourcepath="src"
+            destdir="antdoc" 
+            sourcefiles=""                      
+            windowtitle="Example Antdoclet"
+            doctitle="Antdoclet"
+            locale="de"
+            >
+        	<!-- Where can the registered names of the tasks be found. If missing, the classname is used in the description --> 
+        	<!-- Multiple destinations possible -->
+            <arg line="-taskdef org/centauron/ant/doclet/examples/examples.properties"/>
+        	<!-- How to handle the superclasses? -->
+            <arg line="-superelements add"/>
+        	<!-- Create sections out of packages -->
+            <group title="Example Tasks" packages="org.centauron.ant.doclet.examples"/>
+        	<!-- Where is my doclet -->
+            <doclet name="org.centauron.ant.doclet.Doclet" path="../jar/antdoclet.jar"/>
+        	<!-- Use additonal taglet to implement further logic -->
+        	<!--
+            <taglet name="org.centauron.ant.doclet.ms.MsResourceLinkTaglet"/>
+            -->
+        </javadoc>        
+    </target>   
+</project>
+   
