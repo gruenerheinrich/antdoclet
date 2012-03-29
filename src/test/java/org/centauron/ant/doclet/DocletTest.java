@@ -35,7 +35,7 @@ public class DocletTest {
 	 */
 	@Test
 	public void testSimpleGeneration() {
-		String[] args = new String[] {"-doclet","org.centauron.ant.doclet.Doclet","-d","target/generated-docs/doc1","-sourcepath","D:/temp/apache-ant-1.8.3-src/apache-ant-1.8.3/src/main","org.apache.tools.ant.taskdefs","org.apache.tools.ant.types"};
+		String[] args = new String[] {"-doclet","org.centauron.ant.doclet.Doclet","-d","target/generated-docs/doc1","-sourcepath","src/test/resources_java/examples/src","org.centauron.ant.doclet.examples"};
 		com.sun.tools.javadoc.Main.main(args);
 	}
 }
