@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  * Antdoc doclet
  *
  * @author centauron
+ * @TODO Templates should be outside.
  */
 public class AntDoc {
 
@@ -39,8 +40,6 @@ public class AntDoc {
 		m_Statics = new StaticResourceDoc(this);
 		readOptions(root.options());
 	}
-
-	;
 
     public Locale getLocale() {
 		return m_locale;
