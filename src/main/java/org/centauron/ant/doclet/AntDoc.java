@@ -51,9 +51,8 @@ public class AntDoc {
 	}
 
 	public void write() throws Exception {
-		File dir = null;
-		dir = new File(m_Output);
-		dir.mkdir();
+		File dir = new File(m_Output);
+		dir.mkdirs();
 
 		//CLEAN IT UP
 		Utility.deleteAllFilesInDir(dir);
@@ -277,9 +276,11 @@ public class AntDoc {
 				}
 				//DOCUMENT THE TASK
 				if (packagename == null) {
+					final FileOutputStream fos = new FileOutputStream(m_Output + File.separatorChar + taskfilename);
 					//writeOutTagNames(classdoc);
-					AntTaskDoc dd = new AntTaskDoc(this, classdoc, new FileOutputStream(m_Output + File.separatorChar + taskfilename));
+					AntTaskDoc dd = new AntTaskDoc(this, classdoc, fos);
 					dd.writeout();
+					fos.close();
 				}
 			}
 		}

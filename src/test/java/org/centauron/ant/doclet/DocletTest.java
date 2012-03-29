@@ -32,7 +32,7 @@ public class DocletTest {
 	 */
 	@Test
 	public void testSimpleGeneration() {
-		String[] args = new String[] {"-doclet","org.centauron.ant.doclet.Doclet","-d","target/generated-docs/doc1","-sourcepath","src/test/resources_java/examples/src","org.centauron.ant.doclet.examples"};
+		String[] args = new String[] {"-locale","de_DE","-doclet","org.centauron.ant.doclet.Doclet","-d","target/generated-docs/doc1","-sourcepath","src/test/resources_java/examples/src","org.centauron.ant.doclet.examples"};
 		com.sun.tools.javadoc.Main.main(args);
 	}
 }
