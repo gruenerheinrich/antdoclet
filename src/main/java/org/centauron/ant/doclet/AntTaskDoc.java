@@ -5,6 +5,8 @@ import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.ProgramElementDoc;
 import java.io.OutputStream;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
@@ -16,6 +18,7 @@ public class AntTaskDoc extends ResourceWriter {
 	private AntDoc m_parent;
 	private OutputStream m_stream;
 	private ClassDoc m_doc;
+	private static final Logger logger = Logger.getLogger(AntTaskDoc.class.getName());
 
 	public AntTaskDoc(AntDoc parent, ClassDoc doc, OutputStream mystream) {
 		super(parent);
@@ -125,7 +128,15 @@ public class AntTaskDoc extends ResourceWriter {
 		Vector<String> vc = m_parent.getTagTextVector(m_doc, Constants.TAG_EXAMPLE_CODE, true);
 		Vector<String> vd = m_parent.getTagTextVector(m_doc, Constants.TAG_EXAMPLE_DESCRIPTION, true);
 		if (vc.size() != vd.size()) {
-			throw new Exception("Size of ant.example.code(" + vc.size() + ") and ant.example.description(" + vd.size() + ") do not match for Task" + m_doc.qualifiedName() + ".\n Either all or none of the tags must be localized.");
+			//throw new Exception("Size of ant.example.code(" + vc.size() + ") and ant.example.description(" + vd.size() + ") do not match for Task" + m_doc.qualifiedName() + ".\n Either all or none of the tags must be localized.");
+			logger.log(Level.WARNING, "Size of ant.example.code({0}) and ant.example.description({1}) do not match for Task{2}.\n Either all or none of the tags must be localized. Fallback in progress.", new Object[]{vc.size(), vd.size(), m_doc.qualifiedName()});
+			/*
+			vc = m_parent.getTagTextVector(m_doc, Constants.TAG_EXAMPLE_CODE, false);
+			vd = m_parent.getTagTextVector(m_doc, Constants.TAG_EXAMPLE_DESCRIPTION, false);
+			
+			if (vc.size()!=vd.size()) {
+				logger.warning("examples doesn't match description");
+			}*/
 		}
 		if (v.size() == 0 && vc.size() == 0) {
 			//NO EXAMPLES
@@ -136,8 +147,13 @@ public class AntTaskDoc extends ResourceWriter {
 		for (i = 0; i < v.size(); i++) {
 			writeSingleExample(v.elementAt(i));
 		}
-		for (i = 0; i < vc.size(); i++) {
-			writeSingleDetailedExample(vc.elementAt(i), vd.elementAt(i));
+		for (i = 0; i < Math.max(vc.size(),vd.size()); i++) {
+			if (i<vc.size() && i<vd.size()) 
+				writeSingleDetailedExample(vc.elementAt(i), vd.elementAt(i));
+			else if (i<vc.size())
+				writeSingleDetailedExample(vc.elementAt(i), " <b>missing example description</b> ");
+			else
+				writeSingleDetailedExample(" <b>missing example</b> ",vd.elementAt(i));			
 		}
 		write(m_stream, "task-examples-footer.template");
 	}

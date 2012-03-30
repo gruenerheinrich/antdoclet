@@ -69,4 +69,33 @@ public class DocletTest {
 		assertTrue(new File("target/generated-docs/doc2_en/tasks/HelloWorldChildTask.html").exists());
 		assertTrue(new File("target/generated-docs/doc2_en/tasks/HelloWorldTask.html").exists());
 	}
+	
+	/**
+	 * Try to overread problematic non matching locale definition.
+	 * @throws FileNotFoundException
+	 * @throws IOException 
+	 */
+	@Test
+	public void testSimpleGenerationDeError1() throws FileNotFoundException, IOException {
+		String[] args = new String[] {"-locale","de_DE","-doclet","org.centauron.ant.doclet.Doclet","-d","target/generated-docs/doc1_de_error","-sourcepath","src/test/resources_java/examples/src_error1","org.centauron.ant.doclet.examples"};
+		com.sun.tools.javadoc.Main.execute(args);
+		
+		File f = new File("target/generated-docs/doc1_de_error/cover.html");
+		assertTrue(f.exists());
+		FileReader reader = new FileReader(f);
+		String cover = IOUtils.toString(reader);
+		reader.close();
+		
+		assertTrue(cover.contains("Handbuch"));
+		
+		f = new File("target/generated-docs/doc1_de_error/tasks/HelloWorldTask.html");
+		assertTrue(f.exists());
+		reader = new FileReader(f);
+		String taskTxt = IOUtils.toString(reader);
+		reader.close();
+		assertTrue(taskTxt.contains("missing example description"));
+		
+		assertTrue(new File("target/generated-docs/doc1_de_error/tasks/HelloWorldChildTask.html").exists());
+		assertTrue(new File("target/generated-docs/doc1_de_error/tasks/HelloWorldTask.html").exists());
+	}
 }
