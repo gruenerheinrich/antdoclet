@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import org.apache.commons.io.IOUtils;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import org.junit.*;
 
 /**
