@@ -1,1 +1,27 @@
-This is a test.
+Andoclet
+---------
+
+This doclet creates Apache ANT Manual like documentation files out of your Ant - Sourcecodes.
+
+There are some special annotations to deal with ANT - specifics. The doclet has localization 
+support.
+
+Example
+---------
+
+/**
+ * @ant.description
+ * This is an example Task, that shows how antdoclet works. 
+ * @ant.description.de
+ * Das ist eine Beispieltask, an dem die Funktionsweise von antdoclet erläutert wird. 
+ * 
+ * @ant.example.code
+ * <helloworld display="EXAMPLE"/>
+ * @ant.example.description
+ * Example codes are here.
+ * @ant.example.description.de
+ * Beispielcodes sind hier. 
+ *
+ * @author centauron
+ * @version 0.7
+ */
