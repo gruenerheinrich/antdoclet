@@ -3,8 +3,7 @@ Andoclet
 
 This doclet creates Apache ANT Manual like documentation files out of your Ant - Sourcecodes.
 
-There are some special annotations to deal with ANT - specifics. The doclet has localization 
-support.
+There are some special annotations to deal with ANT - specifics. The doclet has localization support.
 
 Example
 ---------
