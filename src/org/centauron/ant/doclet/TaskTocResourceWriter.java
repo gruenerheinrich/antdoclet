@@ -48,7 +48,7 @@ public class TaskTocResourceWriter extends ResourceWriter
         } else {
         	write( m_Output, "toc-entry.template", arguments );
         }
-        }
+    }
 
     private void writeGroup(String gname,String fname) throws Exception {
         Object[] arguments = {
