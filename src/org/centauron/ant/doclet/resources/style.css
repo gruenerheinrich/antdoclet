@@ -51,3 +51,9 @@ table th {
 pre {
    background-color: efefef;
 }
+
+div.example {
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+}

@@ -1,6 +1,7 @@
 package org.centauron.ant.doclet;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.text.*;
@@ -31,16 +32,15 @@ public class ResourceWriter
     		this.write(out,resource);
     		return;
     	}
-    	resource=getPossiblyLocalizedResource(resource);
         StringBuffer template = new StringBuffer();
-        InputStream index = getClass().getResourceAsStream( resource );
-        if (index==null) {
+        InputStream impstream = getPossiblyLocalizedResource(resource);
+        if (impstream==null) {
         	System.out.println("RESOURCE IS NULL");
         }
         byte[] buff = new byte[10000];
         int size = 0;
 
-        while( (size = index.read( buff )) > 0 )
+        while( (size = impstream.read( buff )) > 0 )
             template.append( new String( buff, 0, size ) );        
         String format = MessageFormat.format( template.toString(), arguments );
         out.write( format.getBytes() );
@@ -49,41 +49,63 @@ public class ResourceWriter
 
     protected void write( OutputStream out, String resource ) throws Exception
     {
-    	resource=getPossiblyLocalizedResource(resource);
-        InputStream index = getClass().getResourceAsStream( resource );
+        InputStream impstream =getPossiblyLocalizedResource(resource);
         byte[] buff = new byte[10000];
         int size = 0;
 
-        while( (size = index.read( buff )) > 0 )
+        while( (size = impstream.read( buff )) > 0 )
             out.write( buff, 0, size );
     };
-    
-    public String getPossiblyLocalizedResource(String t) throws Exception {
-    	String resource=m_resourcepath+t;
+
+    public InputStream getPossiblyLocalizedResource(String t) throws Exception {
+    	InputStream res=null;
+    	if (getUserResourcePath()!=null) {
+    		res=getPossiblyLocalizedResource(getUserResourcePath(),t,true,false);
+    	}
+    	if (res==null) {
+    		res=getPossiblyLocalizedResource(m_resourcepath,t,false,true);
+    	}
+    	return res;
+    }
+    private String getUserResourcePath() {
+		return m_parent.getUserResourcePath();
+	}
+	public InputStream getPossiblyLocalizedResource(String respath,String t,boolean isfileresource,boolean throwerror) throws Exception {
+     	String resource=respath+t;
     	if (m_parent!=null) {
 	    	if (m_parent.getLocale()!=null) {
 	    		if (m_parent.getLocale().getCountry().length()>0) {
-		    		resource=m_resourcepath+m_parent.getLocale().getLanguage()+"/"+m_parent.getLocale().getCountry()+"/" +t;
-			    	if (!this.hasResource(resource)) {
-			    		resource=m_resourcepath+m_parent.getLocale().getLanguage()+"/"+t;
+		    		resource=respath+m_parent.getLocale().getLanguage()+"/"+m_parent.getLocale().getCountry()+"/" +t;
+			    	if (!this.hasResource(resource,isfileresource)) {
+			    		resource=respath+m_parent.getLocale().getLanguage()+"/"+t;
 			    	}
 	    		} else {
-	    			resource=m_resourcepath+m_parent.getLocale().getLanguage()+"/"+t;
+	    			resource=respath+m_parent.getLocale().getLanguage()+"/"+t;
 	    		}
-		    	if (!this.hasResource(resource)) {
-		    		resource=m_resourcepath+t;
+		    	if (!this.hasResource(resource,isfileresource)) {
+		    		resource=respath+t;
 		    	}
 	    	}
     	}
-    	if (!this.hasResource(resource)) {
-    		throw new Exception("Resource "+t + "not found");
+    	if (!this.hasResource(resource,isfileresource)) {
+    		if (throwerror) {
+    			throw new Exception("Resource "+t + " not found!");
+    		} else {
+    			
+    			return null;
+    		}
     	}
     	//System.out.println("USE RESSOURCE:" + resource);
-    	return resource;
-    	
+    	if (isfileresource) {
+    		return new FileInputStream(new File(resource));
+    	} else {
+    		return this.getClass().getResourceAsStream(resource);
+    	}    	
     }
-    private boolean hasResource(String resource) {
-    	boolean b= (this.getClass().getResource(resource)!=null);
-    	return b;
+    private boolean hasResource(String resource,boolean isfileresource) {
+    	if (isfileresource) {
+    		return (new File(resource)).exists();
+    	}
+    	return (this.getClass().getResource(resource)!=null);
     }
 }

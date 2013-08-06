@@ -66,7 +66,8 @@ public class AntAttributeDoc extends SinglePageDoc {
 			Class cl=RunTimeUtils.loadClass(this.getClass().getClassLoader(), m_doc);
 			String[] vals=null;
 			if (f.isStatic()) {
-				vals=(String[])RunTimeUtils.loadStaticFieldInstance(cl, f.name());
+				Object o=RunTimeUtils.loadStaticFieldInstance(cl, f.name());
+				if (o instanceof String[]) vals=(String[])o;
 			}
 			Vector<String> comms=m_parent.getTagTextVector(f,Constants.TAG_DESCRIPTION , true);
 			String allcomms=Utility.joinStrings(comms,"");

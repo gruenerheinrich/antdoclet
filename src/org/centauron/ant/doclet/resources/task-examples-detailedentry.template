@@ -1,2 +1,6 @@
+<div class="example">
 <blockquote><pre>{0}</pre></blockquote>
+<div class="description">
 {1}
+</div>
+</div>

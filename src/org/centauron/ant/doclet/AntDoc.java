@@ -26,6 +26,7 @@ public class AntDoc {
 	private String m_Overview = null;
 	private String m_sourcepath = null;
 	private String m_Title = "Ant tasks";
+	private String m_resourcedir=null;
 	private String m_superelements = "ignore";
 	private Vector<String[]> m_groups = new Vector();
 	private Hashtable<String, String> m_taskdefoptionsentries = new Hashtable();
@@ -48,6 +49,15 @@ public class AntDoc {
 	public String getOutput() {
 		return m_Output;
 	}
+	
+	public String getUserResourcePath() {
+		return m_resourcedir;
+	}
+	
+    private void setUserResourcePath(String string) {
+    	File f=new File(string);
+    	m_resourcedir=f.getAbsolutePath()+"/";
+	}	
 
 	public void write() throws Exception {
 		File dir = new File(m_Output);
@@ -551,6 +561,9 @@ public class AntDoc {
 			if (opts[o][0].equals("-title")) {
 				m_Title = opts[o][1];
 			}
+			if (opts[o][0].equals("-resourcedir")) {
+				setUserResourcePath(opts[o][1]);
+			}
 			if (opts[o][0].equals("-doctitle")) {
 				m_Title = opts[o][1];
 			}
@@ -593,7 +606,9 @@ public class AntDoc {
 
 	;	
     
-    private void initTaglet(String tagletname, String tagletpath) {
+
+
+	private void initTaglet(String tagletname, String tagletpath) {
 		try {
 			Taglet t = null;
 			if (tagletpath == null) {

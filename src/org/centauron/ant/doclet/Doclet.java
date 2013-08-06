@@ -6,8 +6,6 @@ import com.sun.javadoc.RootDoc;
 /**
  * Antdoc doclet
  *
- * Copyright: Copyright (c) 2002, Toni Thomsson, All rights reserved.
- *
  * @author centauron
  * @version 0.5
  */
@@ -40,7 +38,6 @@ public class Doclet {
 			e.printStackTrace();
 			System.err.println(e);
 		}
-
 		return result;
 	}
 
@@ -75,7 +72,9 @@ public class Doclet {
 		if (option.equals("-superelements")) {
 			return 2;
 		}
-
+		if (option.equals("-resourcedir")) {
+			return 2;
+		}
 		return 0;
 	}
 
